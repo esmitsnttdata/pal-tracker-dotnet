@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PalTracker;
 
 namespace PalTracker
 {
@@ -24,6 +25,14 @@ namespace PalTracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSingleton(sp  =>  new WelcomeMessage(Configuration.GetValue<string>("WELCOME_MESSAGE", "WELCOME_MESSAGE not configured "))) ;
+            services.AddSingleton(sp  =>  new CloudFoundryInfo(
+                Configuration.GetValue<string>("PORT", "port not configured "),             
+                Configuration.GetValue<string>("MEMORY_LIMIT", "memoryLimit not configured "),
+                Configuration.GetValue<string>("CF_INSTANCE_INDEX", "cfInstanceIndex not configured "), 
+                Configuration.GetValue<string>("CF_INSTANCE_ADDR", "cfInstanceAddr not configured ")
+            ));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
