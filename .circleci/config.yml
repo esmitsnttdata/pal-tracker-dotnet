@@ -27,6 +27,7 @@ jobs:
           DEBIAN_FRONTEND: "noninteractive"
           EXTRACT_DEST: /tmp/extracted-archive
           ENVIRONMENT: review
+          
     steps:
       - attach_workspace:
           at: artifacts
@@ -39,6 +40,16 @@ jobs:
             echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
             apt-get update
             apt-get install cf-cli
+      - run:
+          name: Install jq
+          command: |
+            apt-get -y install jq
+
+      - run:
+          name: Install flyway
+          command: |
+            curl https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.1.1/flyway-commandline-5.1.1-linux-x64.tar.gz | tar xvz
+            
 
       - run:
           name: Unzip artifacts
@@ -73,6 +84,17 @@ jobs:
             echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
             apt-get update
             apt-get install cf-cli
+            
+      - run:
+          name: Install jq
+          command: |
+            apt-get -y install jq
+
+      - run:
+          name: Install flyway
+          command: |
+            curl https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.1.1/flyway-commandline-5.1.1-linux-x64.tar.gz | tar xvz
+                        
 
       - run:
           name: Unzip artifacts
