@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace PalTracker {
 public class EnvController:ControllerBase
 {
-    public readonly CloudFoundryInfo CloudFoundryInfo;
+    private readonly CloudFoundryInfo _cloudFoundryInfo;
 
     [HttpGet]
     [Route("/env")]
-    public CloudFoundryInfo Get() => CloudFoundryInfo;
+    public CloudFoundryInfo Get() => _cloudFoundryInfo;
 
     public  EnvController(CloudFoundryInfo cloudFoundryInfo)
     {
-        CloudFoundryInfo =  cloudFoundryInfo;
+        _cloudFoundryInfo =  cloudFoundryInfo;
     }
 
 }
